@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+</head>
+<body>
+    <h1>Log in</h1>
+    <a href="/index.html">Home</a>
+
+    <form>
+        <!-- TODO: Add username address input -->
+        <label for="username">User Name</label>
+        <input id="username" type="text" name="username" autofocus>
+        <br> <!-- break line-->
+        <!-- TODO: Add password address input -->
+        <label for="password">Password</label>
+        <input id="password" type="text" name="password" autofocus>
+        <!-- TODO: Add submit button -->
+        <input type="submit" value="Submit"/>
+    </form>
+
+    <script>
+
+        function api(u,p){
+            let url = "/api/login"
+
+            return fetch(url, {method: "POST", body: JSON.stringify({username: u, password: p})}).then(response => response.json());
+        }
+
+        let form = document.querySelector("form");
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            let user_name = new FormData(form).get("username");
+            let user_password = new FormData(form).get("password");
+            console.log(user_name);
+            console.log(user_password);
+
+            api(user_name, user_password).then((response) => {
+                console.log(response);
+            });
+
+        });
+
+        /*
+            TODO: Stop the submit button sending the form
+            TODO: Capture the input values using FormData
+            TODO: Send the data to the login API /api/login
+            TODO: Check the login is correct agains some hard-coded values, e.g. username="test@test.com", password="password"
+         */
+    </script>
+</body>
+</html>
