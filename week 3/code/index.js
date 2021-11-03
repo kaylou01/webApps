@@ -18,7 +18,9 @@ app.get('/api/hello', function (req, res) {
 })
 
 app.post('/api/login', function (req, res) {
+  
   console.log(req.body);
+  res.status(200);
 })
 
 // Tell us where we're running from
