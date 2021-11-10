@@ -39,8 +39,6 @@
         .then(response  => response.json())
     }
     
-
-
         let form = document.querySelector("form");
 
         form.addEventListener("submit", (event) => {
@@ -48,14 +46,13 @@
 
             let user_name = new FormData(form).get("username");
             let user_password = new FormData(form).get("password");
-            console.log(user_name);
-            console.log(user_password);
 
             callApi(user_name, user_password).then((response) => {
                 console.log(response);
             });
 
         });
+    
 
         /*
             TODO: Stop the submit button sending the form
