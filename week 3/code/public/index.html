@@ -25,7 +25,7 @@
     document.addEventListener('DOMContentLoaded', (event) => {
 
         let loggedIn =  window.sessionStorage.getItem('username')
-
+// prints out user
         if(loggedIn){
             text = 'Logged In as ' + sessionStorage.getItem('username')
             loggIn.insertAdjacentHTML("beforeend", `<p>${text}</p>`)
