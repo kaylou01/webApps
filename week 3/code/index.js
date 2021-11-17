@@ -24,14 +24,13 @@ app.post('/api/login', function (req, res) {
   console.log(req.body);
   res.status(200);
   //let loggin = false;
-  Users.login(req.body.username, req.body.password)
-  // (req.body.username == "kay" && req.body.password == "123"){
-  //   loggin = true;
-  // }
-
-  res.json({
-    msg: "hello"
-  });
+  Users.login(req.body.username, req.body.password, result => {
+    console.log(result)
+    if(!result){
+      result = false
+    }
+    res.status(200).json(result);
+  })
 })
 
 // Tell us where we're running from

@@ -9,6 +9,10 @@
     <h1>Log in</h1>
     <a href="/index.html">Home</a>
 
+    <div id="errorMessage">
+
+    </div>
+
     <form>
         <!-- TODO: Add username address input -->
         <label for="username">User Name</label>
@@ -40,6 +44,7 @@
     }
     
         let form = document.querySelector("form");
+        let div = document.getElementById("errorMessage")
 
         form.addEventListener("submit", (event) => {
             event.preventDefault();
@@ -47,19 +52,18 @@
             let user_name = new FormData(form).get("username");
             let user_password = new FormData(form).get("password");
 
-            callApi(user_name, user_password).then((response) => {
-                console.log(response);
+            callApi(user_name, user_password).then((result) => {
+                console.log(result)
+                if(result){
+                   window.sessionStorage.setItem('username', result.username)
+                    window.location = '/index.html'
+                } else {
+                    div.insertAdjacentHTML("beforeend", "<p>Incorrect details</P>")
+                }
             });
 
         });
     
-
-        /*
-            TODO: Stop the submit button sending the form
-            TODO: Capture the input values using FormData
-            TODO: Send the data to the login API /api/login
-            TODO: Check the login is correct agains some hard-coded values, e.g. username="test@test.com", password="password"
-         */
     </script>
 </body>
 </html>
