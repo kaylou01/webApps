@@ -11,7 +11,6 @@
     <a href="/login.html">Login</a>
     <a id="logoutLink" class="hidden" onclick="logout()" href="#">Logout</a>
     <div id="deatils">
-
     </div>
 </body>
 
@@ -25,7 +24,7 @@
     document.addEventListener('DOMContentLoaded', (event) => {
 
         let loggedIn =  window.sessionStorage.getItem('username')
-// prints out user
+        // prints out user
         if(loggedIn){
             text = 'Logged In as ' + sessionStorage.getItem('username')
             loggIn.insertAdjacentHTML("beforeend", `<p>${text}</p>`)
