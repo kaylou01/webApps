@@ -6,6 +6,7 @@ const port = 3000
 const funcs = require('./src/funcs.js');
 const database = require('./src/database.js');
 const Users = require('./src/users.js');
+const post = require('./src/posts.js')
 database.connect()
 
 // Tell Express to server HTML, JS, CSS etc from the public/ folder
@@ -31,6 +32,15 @@ app.post('/api/login', function (req, res) {
     }
     res.status(200).json(result);
   })
+})
+
+app.post('/api/posts', function (req, res){
+console.log(req.body);
+post.posts(req.body.title, req.body.body, result =>{
+  console.log(result)
+  res.status(200).json(result);
+})
+
 })
 
 // Tell us where we're running from
