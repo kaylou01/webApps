@@ -54,9 +54,9 @@
 
             callApi(user_name, user_password).then((result) => {
                 console.log(result)
-                if(result){
+                if(result && result.token){
                    window.sessionStorage.setItem('username', result.username)
-                   window.sessionStorage.setItem('userId', result.id)
+                   window.sessionStorage.setItem('userToken', result.userToken)
                     window.location = '/index.html'
                 } else {
                     div.insertAdjacentHTML("beforeend", "<p>Incorrect details</P>")

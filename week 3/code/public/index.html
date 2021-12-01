@@ -16,6 +16,7 @@
 
 <script>
     function logout() {
+        window.sessionStorage.removeItem('userToken')
         window.location = '/login.html';
     }
 
@@ -23,7 +24,8 @@
 
     document.addEventListener('DOMContentLoaded', (event) => {
 
-        let loggedIn =  window.sessionStorage.getItem('username')
+        let loggedIn =  window.sessionStorage.getItem('userToken')
+        let body = document.getElementsByTagName('body')[0];
         // prints out user
         if(loggedIn){
             text = 'Logged In as ' + sessionStorage.getItem('username')
