@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>view Post</title>
+</head>
+<body>
+
+<div id="title">
+
+</div>
+
+<div id="body">
+
+</div>
+
+</body>
+
+<script>
+
+    function callApi() {
+        let url = "/api/posts"
+    
+        return fetch(url,{
+            method: "GET",
+        })   
+        .then(response  => response.json())
+    }
+
+    callApi().then((result) => {
+            console.log(result)
+
+            });
+</script>
+</html>

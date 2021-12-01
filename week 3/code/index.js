@@ -36,11 +36,19 @@ app.post('/api/login', function (req, res) {
 
 app.post('/api/posts', function (req, res){
 console.log(req.body);
-post.posts(req.body.title, req.body.body, result =>{
+post.create(req.body.title, req.body.body, result =>{
   console.log(result)
   res.status(200).json(result);
 })
 
+})
+
+app.get('/api/posts', function (req, res){
+  post.getAll(result =>{
+    console.log(result)
+    console.log("hello")
+    res.status(200).json({result});
+  })
 })
 
 // Tell us where we're running from
