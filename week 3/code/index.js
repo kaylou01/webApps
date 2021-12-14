@@ -43,11 +43,13 @@ post.create(req.body.title, req.body.body, result =>{
 
 })
 
-app.get('/api/posts', function (req, res){
-  post.getAll(result =>{
-    console.log(result)
-    console.log("hello")
-    res.status(200).json({result});
+app.get('/api/posts', (req, res)=>{
+  let offset = req.query.offset
+  let limit = 10
+  post.getAll(offset, limit, (result) =>{
+    //console.log(result)
+    //console.log("hello")
+    res.json({result});
   })
 })
 
