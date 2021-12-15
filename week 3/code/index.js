@@ -45,7 +45,7 @@ post.create(req.body.title, req.body.body, result =>{
 
 app.get('/api/posts', (req, res)=>{
   let offset = req.query.offset
-  let limit = 10
+  let limit = 5
   post.getAll(offset, limit, (result) =>{
     //console.log(result)
     //console.log("hello")

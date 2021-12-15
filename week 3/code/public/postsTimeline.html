@@ -28,7 +28,7 @@
 <script>
 
     let offset = 0;
-    let limit = 10;
+    let limit = 5;
 
     function callApi() {
         let url = "/api/posts"
@@ -41,7 +41,6 @@
 
     callApi().then((result) => {
             console.log(result)
-
             });
 
     function showPosts(posts){
@@ -51,7 +50,6 @@
 
         posts.forEach(post => {
             let clone = template.content.firstElementChild.cloneNode(true)
-            console.log(clone)
             clone.getElementsByTagName('h2')[0].textContent = post.title
             clone.getElementsByClassName('body')[0].textContent = post.body
 
@@ -68,7 +66,7 @@
                 })
             })
 
-            offset += 10
+            offset += 5
         }
 
 </script>

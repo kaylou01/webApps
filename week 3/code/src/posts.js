@@ -14,7 +14,10 @@ module.exports ={
     }, 
     getAll(offset,limit,sendBack){
         dataBase.connect().then((db)=>{
-            db.all('SELECT * FROM posts'). then(results => {
+            db.all('SELECT * FROM posts ORDER BY id DESC LIMIT ? OFFSET ?',
+            limit,
+            offset,
+            ). then(results => {
                 sendBack(results)
             })
         })
