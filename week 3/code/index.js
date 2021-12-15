@@ -1,3 +1,17 @@
+const UUID = require('uuid')
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './public/uploads')
+  },
+  filename: function (req, file, callback) {
+    callback(null, UUID.v4() + '-' + file.originalname)
+  }
+})
+const upload = multer({
+  storage: storage
+})
+///////
 const express = require('express')
 const app = express()
 const port = 3000
@@ -34,21 +48,17 @@ app.post('/api/login', function (req, res) {
   })
 })
 
-app.post('/api/posts', function (req, res){
-console.log(req.body);
-post.create(req.body.title, req.body.body, result =>{
-  console.log(result)
-  res.status(200).json(result);
-})
-
+app.post('/api/posts', upload.single('image'),function (req, res){
+console.log(req.body, req.file);
+  post.create(req.body.title_posts, req.body.post, req.file.filename, result =>{
+     res.status(200).json(result);
+   })
 })
 
 app.get('/api/posts', (req, res)=>{
   let offset = req.query.offset
   let limit = 5
   post.getAll(offset, limit, (result) =>{
-    //console.log(result)
-    //console.log("hello")
     res.json(result);
   })
 })
