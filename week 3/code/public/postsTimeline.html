@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>view Post</title>
+</head>
+<body>
+    <h1>Posts Time Line</h1>
+
+<div id ="posts">
+<!--Posts will be displayed here-->
+</div>
+
+<div>
+ <button onclick='loadMore()'>Load More</button>
+</div>
+
+<template id="post-template">
+    <div class="posts">
+        <h2></h2>
+        <img>
+        <div class="body"></div>
+    </div>
+</template>
+
+</body>
+
+<script>
+
+    let offset = 0;
+    let limit = 5;
+
+    function callApi() {
+        let url = "/api/posts"
+    
+        return fetch(url,{
+            method: "GET",
+        })   
+        .then(response  => response.json())
+    }
+
+    callApi().then((result) => {
+            console.log(result)
+            });
+
+    function showPosts(posts){
+        let template = document.getElementById("post-template")
+        let output = document.getElementById("posts")
+
+
+        posts.forEach(post => {
+            let clone = template.content.firstElementChild.cloneNode(true)
+            clone.getElementsByTagName('h2')[0].textContent = post.title
+            clone.getElementsByClassName('body')[0].textContent = post.body
+            if (post.image_id) {
+                    clone.getElementsByTagName('img')[0].src = "/uploads/" + post.filepath
+                }
+
+            output.appendChild(clone);
+        })
+    }
+
+    function loadMore() {
+            fetch('/api/posts?offset=' + offset + '&limit=' + limit, {
+            }).then(function(result) {
+                result.json().then(result => {
+                    console.log(result)
+                    showPosts(result)
+                })
+            })
+
+            offset += 5
+        }
+
+</script>
+</html>

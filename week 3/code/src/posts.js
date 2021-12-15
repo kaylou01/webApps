@@ -2,19 +2,32 @@ const dataBase = require('./database.js');
 
 module.exports ={
 
-    create (titlePost, post, sendBack){
+    create (titlePost, post, filename, sendBack){
         dataBase.connect().then((db)=>{
-            db.run('INSERT INTO posts ("title", "body") VALUES(?,?)',
-            titlePost,
-            post,
-            ). then(results => {
-                sendBack(results)
+
+            db.run('INSERT INTO images (filepath) VALUES (?)',
+            filename
+            ).then( results =>{
+                db.run('INSERT INTO posts (title, body, image_id) VALUES(?,?,?)',
+                titlePost,
+                post,
+                results.lastID
+                ). then(results => {
+                    sendBack(results)
+                })
+                console.log(results)
+
             })
+
         })
     }, 
-    getAll(sendBack){
+   
+    getAll(offset,limit, sendBack){
         dataBase.connect().then((db)=>{
-            db.all('SELECT * FROM posts'). then(results => {
+            db.all('SELECT * FROM posts JOIN images ON posts.image_id = images.id ORDER BY id DESC LIMIT ? OFFSET ?',
+            limit,
+            offset,
+            ). then(results => {
                 sendBack(results)
             })
         })
