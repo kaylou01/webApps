@@ -49,7 +49,7 @@ app.get('/api/posts', (req, res)=>{
   post.getAll(offset, limit, (result) =>{
     //console.log(result)
     //console.log("hello")
-    res.json({result});
+    res.json(result);
   })
 })
 

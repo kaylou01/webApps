@@ -8,7 +8,7 @@
 <body>
     <h1>Posts Time Line</h1>
 
-<div class ="posts">
+<div id ="posts">
 <!--Posts will be displayed here-->
 </div>
 
@@ -48,10 +48,11 @@
         let template = document.getElementById("post-template")
         let output = document.getElementById("posts")
 
-        posts.forEach(posts => {
-            let clone = template.content.firstElementChild.cloneNode()
 
-            clone.getElementsByTagName('h2')[0].textContent = posts.title
+        posts.forEach(post => {
+            let clone = template.content.firstElementChild.cloneNode(true)
+            console.log(clone)
+            clone.getElementsByTagName('h2')[0].textContent = post.title
             clone.getElementsByClassName('body')[0].textContent = post.body
 
             output.appendChild(clone);
@@ -61,7 +62,10 @@
     function loadMore() {
             fetch('/api/posts?offset=' + offset + '&limit=' + limit, {
             }).then(function(result) {
-                showPosts(result)
+                result.json().then(result => {
+                    console.log(result)
+                    showPosts(result)
+                })
             })
 
             offset += 10

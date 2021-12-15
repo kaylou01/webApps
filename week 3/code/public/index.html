@@ -14,9 +14,11 @@
 <body>
     <h1>Home page</h1>
     <a id="loginLink" class="hidden" href="/login.html">Login</a>
-    <a id="logoutLink" class="hidden" onclick="logout()" href="#">Logout</a>
+    <a id="createPosts" class="hidden" href="/new_posts.html">Create New Post</a>
+    <a id="viewPosts" class="hidden" href="/postsTimeline.html">See your timeline</a>
     <div id="deatils">
     </div>
+    <a id="logoutLink" class="hidden" onclick="logout()" href="#">Logout</a>
 </body>
 
 <script>
@@ -35,7 +37,8 @@
         if(loggedIn){
             text = 'Logged In as ' + sessionStorage.getItem('username')
             document.getElementById('logoutLink').classList.remove('hidden')
-            
+            document.getElementById('createPosts').classList.remove('hidden')
+            document.getElementById('viewPosts').classList.remove('hidden')
         }
         else {
             text= "Not logged in yet"

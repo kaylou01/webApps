@@ -12,7 +12,7 @@ module.exports ={
             })
         })
     }, 
-    getAll(sendBack){
+    getAll(offset,limit,sendBack){
         dataBase.connect().then((db)=>{
             db.all('SELECT * FROM posts'). then(results => {
                 sendBack(results)
