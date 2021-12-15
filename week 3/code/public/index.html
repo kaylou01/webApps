@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home page</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Home page</h1>
-    <a href="/login.html">Login</a>
+    <a id="loginLink" class="hidden" href="/login.html">Login</a>
     <a id="logoutLink" class="hidden" onclick="logout()" href="#">Logout</a>
     <div id="deatils">
     </div>
@@ -29,8 +34,14 @@
         // prints out user
         if(loggedIn){
             text = 'Logged In as ' + sessionStorage.getItem('username')
-            loggIn.insertAdjacentHTML("beforeend", `<p>${text}</p>`)
+            document.getElementById('logoutLink').classList.remove('hidden')
+            
         }
+        else {
+            text= "Not logged in yet"
+            document.getElementById('loginLink').classList.remove('hidden')
+        }
+        loggIn.insertAdjacentHTML("beforeend", `<p>${text}</p>`)
     })
 </script>
 
