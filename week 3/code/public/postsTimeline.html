@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>view Post</title>
 </head>
+<style>
+    img{
+       width: 50%; 
+    }
+</style>
 <body>
     <h1>Posts Time Line</h1>
 
@@ -12,16 +17,19 @@
 <!--Posts will be displayed here-->
 </div>
 
+
 <div>
- <button onclick='loadMore()'>Load More</button>
+ <button onclick='loadMore()'>Load Posts</button>
 </div>
 
 <template id="post-template">
+    <a>
     <div class="posts">
         <h2></h2>
         <img>
         <div class="body"></div>
     </div>
+    </a>
 </template>
 
 </body>
@@ -53,6 +61,7 @@
             let clone = template.content.firstElementChild.cloneNode(true)
             clone.getElementsByTagName('h2')[0].textContent = post.title
             clone.getElementsByClassName('body')[0].textContent = post.body
+            clone.href = "/viewPost.html?postId=" + post.id
             if (post.image_id) {
                     clone.getElementsByTagName('img')[0].src = "/uploads/" + post.filepath
                 }
