@@ -55,11 +55,20 @@ console.log(req.body, req.file);
    })
 })
 
+
 app.get('/api/posts', (req, res)=>{
   let offset = req.query.offset
   let limit = 5
   post.getAll(offset, limit, (result) =>{
+    console.log(result)
     res.json(result);
+  })
+})
+
+app.get('/api/post/:id', (req, res)=>{
+  post.getSingle(req.params.id, (result) =>{
+    console.log(result)
+    res.json(result)
   })
 })
 

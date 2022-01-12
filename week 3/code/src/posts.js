@@ -24,12 +24,29 @@ module.exports ={
    
     getAll(offset,limit, sendBack){
         dataBase.connect().then((db)=>{
-            db.all('SELECT * FROM posts JOIN images ON posts.image_id = images.id ORDER BY id DESC LIMIT ? OFFSET ?',
+            db.all('SELECT posts.id, posts.title, posts.body, posts.image_id, posts.user_id, images.filepath FROM posts JOIN images ON posts.image_id = images.id ORDER BY posts.id DESC LIMIT ? OFFSET ?',
             limit,
             offset,
             ). then(results => {
                 sendBack(results)
             })
+        })
+    },
+
+    getSingle(postId, sendBack){
+        console.log(postId)
+        dataBase.connect().then((db)=>{
+            db.get('SELECT * FROM posts JOIN images ON posts.image_id = images.id WHERE posts.id= ?',
+            postId,
+            ). then(results => {
+                sendBack(results)
+            })
+        })
+    },
+
+    createComment(){
+        dataBase.connect().then((db)=>{
+
         })
     }
 

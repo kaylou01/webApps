@@ -5,22 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>view Post</title>
 </head>
+<style>
+    img{
+       width: 50%; 
+    }
+</style>
 <body>
 
-<div id="title">
+    <div id="post">
+        <!--1 post will be displayed here-->
+    </div>
 
-</div>
-
-<div id="body">
-
-</div>
+    <template id="post-template">
+        <div class="posts">
+            <h2></h2>
+            <img>
+            <div class="body"></div>
+        </div>
+    </template>
 
 </body>
 
 <script>
 
     function callApi() {
-        let url = "/api/posts"
+        const params = new URLSearchParams(window.location.search);
+
+        const postId = params.get("postId");
+
+        let url = `/api/post/${postId}`
     
         return fetch(url,{
             method: "GET",
@@ -28,9 +41,27 @@
         .then(response  => response.json())
     }
 
+
     callApi().then((result) => {
             console.log(result)
+            showPost(result)
+    });
 
-            });
+    function showPost(post) {
+
+    let template = document.getElementById("post-template")
+    let output = document.getElementById("post")
+
+    
+            let clone = template.content.firstElementChild.cloneNode(true)
+            clone.getElementsByTagName('h2')[0].textContent = post.title
+            clone.getElementsByClassName('body')[0].textContent = post.body
+            if (post.image_id) {
+                    clone.getElementsByTagName('img')[0].src = "/uploads/" + post.filepath
+                }
+
+            output.appendChild(clone);
+        }
+        
 </script>
 </html>
