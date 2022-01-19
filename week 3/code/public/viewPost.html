@@ -36,6 +36,7 @@
 
     <div id="comments">
       <!--comments will be displayed here-->
+      <button onclick='showComments()'>show comments</button>
     </div>
 
     <!--template for comments-->
@@ -124,18 +125,39 @@
             });
         });
 
-        // function to show comments in front end
-    function showComments(comments) {
+        // function to show comments in front end using get method
 
-    let template = document.getElementById("comment-template")
-    let output = document.getElementById("comment")
+        function showComments() {
+        const params = new URLSearchParams(window.location.search);
 
+        const postId = params.get("postId");
+
+        let url = `/api/post/${postId}/comment`
     
-    let clone = template.content.firstElementChild.cloneNode(true)
-            clone.getElementsByClassName('body_comments')[0].textContent = post.body
-            output.appendChild(clone);
-        
+        return fetch(url,{
+            method: "GET",
+        })   
+        .then(response  => response.json())
     }
+// calling the showcomments function
+
+    showComments().then((result) => {
+            console.log(result)
+            displayComments(result)
+    });
+
+    // function to get comments to show
+    function displayComments(comments) {
+        let template = document.getElementById("comment-template")
+        let output = document.getElementById("comment")
+
+        let clone = template.content.firstElementChild.cloneNode(true)
+        clone.getElementsByClassName('body_comments')[0].textContent = comment.body
+    }
+   
+
+        
+    
 
     
         

@@ -68,6 +68,17 @@ module.exports ={
                 sendBack(results)
             })
         })
+    },
+
+    getComment( postID, comment, sendBack){
+        dataBase.connect().then((db) =>{
+            db.get('SELECT comments.id, comments.body FROM comments', 
+            postID,
+            comment,
+            ).then(results =>{
+                sendBack(results)
+            })
+        })
     }
 
 }
