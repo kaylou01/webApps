@@ -30,6 +30,9 @@
         let url = "/api/posts"
     
         return fetch(url,{
+            headers: {
+                "X-API-Token": window.sessionStorage.getItem('userToken')
+            },
             method: "POST",
             body:  formData,
         })   

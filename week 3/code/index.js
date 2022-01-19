@@ -50,9 +50,23 @@ app.post('/api/login', function (req, res) {
 
 app.post('/api/posts', upload.single('image'),function (req, res){
 console.log(req.body, req.file);
-  post.create(req.body.title_posts, req.body.post, req.file.filename, result =>{
-     res.status(200).json(result);
-   })
+let apiToken = req.get('X-API-Token')
+Users.findUserToken(apiToken, user =>{
+  if(user){
+    if(req.file){
+      post.create(req.body.title_posts, req.body.post, req.file.filename, user.id, result =>{
+        res.status(200).json(result);
+       })
+    } else{
+      post.create(req.body.title_posts, req.body.post, null, user.id, result =>{
+        res.status(200).json(result);
+       })
+    }
+   
+  } else{
+    res.status(401).send({msg: "could not find this user"})
+  }
+  })
 })
 
 
@@ -69,6 +83,14 @@ app.get('/api/post/:id', (req, res)=>{
   post.getSingle(req.params.id, (result) =>{
     console.log(result)
     res.json(result)
+  })
+})
+
+app.post('/api/post/:id/comment', (req, res)=> {
+  console.log(req.body);
+  post.createComment(req.params.id, req.body.comment, result =>{
+    console.log(result);
+    res.status(200).json(result);
   })
 })
 
