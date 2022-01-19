@@ -2,22 +2,35 @@ const dataBase = require('./database.js');
 
 module.exports ={
 
-    create (titlePost, post, filename, sendBack){
+    create (titlePost, post, filename, userID, sendBack){
         dataBase.connect().then((db)=>{
 
-            db.run('INSERT INTO images (filepath) VALUES (?)',
+            if(filename !== null){
+                db.run('INSERT INTO images (filepath) VALUES (?)',
             filename
             ).then( results =>{
-                db.run('INSERT INTO posts (title, body, image_id) VALUES(?,?,?)',
+                db.run('INSERT INTO posts (title, body, image_id, user_id) VALUES(?,?,?,?)',
                 titlePost,
                 post,
-                results.lastID
+                results.lastID,
+                userID
                 ). then(results => {
                     sendBack(results)
                 })
                 console.log(results)
 
             })
+            } else {
+                db.run('INSERT INTO posts (title, body, user_id) VALUES(?,?,?)',
+                titlePost,
+                post,
+                userID
+                ). then(results => {
+                    sendBack(results)
+                })
+            
+            }
+            
 
         })
     }, 
@@ -44,9 +57,27 @@ module.exports ={
         })
     },
 
-    createComment(){
+    createComment(postID, comment, userId, sendBack){
+        console.log(comment)
         dataBase.connect().then((db)=>{
+            db.run('INSERT INTO comments (post_id, body, user_id) VALUES (?,?,?)',
+            postID,
+            comment,
+            userId
+            ). then(results => {
+                sendBack(results)
+            })
+        })
+    },
 
+    getComment( postID, comment, sendBack){
+        dataBase.connect().then((db) =>{
+            db.get('SELECT comments.id, comments.body FROM comments', 
+            postID,
+            comment,
+            ).then(results =>{
+                sendBack(results)
+            })
         })
     }
 

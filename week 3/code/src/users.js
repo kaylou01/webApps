@@ -11,10 +11,12 @@ module.exports={
     
         //console.log(result);
 
-        if(result && !result.userToken){
-            let userToken = UUID.v4();
-              db.run('UPDATE users SET token = ? WHERE id = ?', userToken, result.id).then (() =>{
-                result.userToken = userToken;
+        if(result && !result.token){
+            let token = UUID.v4();
+            console.log("hello")
+            console.log(result)
+              db.run('UPDATE users SET token = ? WHERE id = ?', token, result.id).then (() =>{
+                result.token = token;
                 sendBack(result);
            })
         } else {
@@ -26,11 +28,13 @@ module.exports={
         })
     },
     findUserToken(userToken, sendBack){
-        db.connect('SELECT * FROM users where token =?', userToken).then(result =>{
-            sendBack(result)
-        }).catch(err =>{
-            console.log('users.findUserToken failed with error:' + err)
-            //sendBack(false)
+        dataBase.connect().then((db) => {
+            db.get('SELECT * FROM users WHERE token =?', userToken).then(result =>{
+                sendBack(result)
+            }).catch(err =>{
+                console.log('users.findUserToken failed with error:' + err)
+                //sendBack(false)
+            })
         })
     }
 }
