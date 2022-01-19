@@ -57,14 +57,16 @@ module.exports ={
         })
     },
 
-    createComment(comment, sendBack){
+    createComment(postID, comment, userId, sendBack){
+        console.log(comment)
         dataBase.connect().then((db)=>{
-            db.run('INSERT INTO comments (body) VALUES (?)',
+            db.run('INSERT INTO comments (post_id, body, user_id) VALUES (?,?,?)',
+            postID,
             comment,
+            userId
             ). then(results => {
                 sendBack(results)
             })
-            console.log(results)
         })
     }
 

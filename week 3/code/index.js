@@ -88,10 +88,14 @@ app.get('/api/post/:id', (req, res)=>{
 
 app.post('/api/post/:id/comment', (req, res)=> {
   console.log(req.body);
-  post.createComment(req.params.id, req.body.comment, result =>{
-    console.log(result);
-    res.status(200).json(result);
+  let apiToken = req.get('X-API-Token')
+  Users.findUserToken(apiToken, user =>{
+    post.createComment(req.params.id, req.body.comment, user.id, result =>{
+      console.log(result);
+      res.status(200).json(result);
+    })
   })
+ 
 })
 
 // Tell us where we're running from

@@ -16,6 +16,7 @@
         <!--1 post will be displayed here-->
     </div>
 
+    <!--template for post-->
     <template id="post-template">
         <div class="posts">
             <h2></h2>
@@ -24,6 +25,7 @@
         </div>
     </template>
 
+    <!--form for users to add comments-->
     <form>
         <label for="users_comment">
             Add your comments
@@ -31,10 +33,26 @@
         <input id="comment" type="text" name="comment" autofocus>
         <input type="submit" value="Add Comment"/>
     </form>
+
+    <div id="comments">
+      <!--comments will be displayed here-->
+    </div>
+
+    <!--template for comments-->
+    <template id="comment-template">
+        <div class="comment">
+            <div class="body_comments">
+                <!--users comments will be displayed here-->
+            </div>
+        </div>
+    </template>
+
 </body>
 
 <script>
+    // POSTS
 
+// function for get method
     function callApi() {
         const params = new URLSearchParams(window.location.search);
 
@@ -48,13 +66,13 @@
         .then(response  => response.json())
     }
 
-
+// calling the get fiunction to show the 1 post
     callApi().then((result) => {
             console.log(result)
             showPost(result)
     });
 
-
+// function to show posts
     function showPost(post) {
 
     let template = document.getElementById("post-template")
@@ -70,14 +88,25 @@
 
             output.appendChild(clone);
         }
-    
-    function callApiComments(formData){
+   // COMMENTS
 
-            let urlC = "/api/posts"
+// function for POST method
+    function callApiComments(comment){
 
-        return fetch(urlC,{
+        const params = new URLSearchParams(window.location.search);
+
+        const postId = params.get("postId");
+
+        let url = `/api/post/${postId}/comment`
+
+        return fetch(url,{
+            headers: {
+                "X-API-Token": window.sessionStorage.getItem('userToken'),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             method: "POST",
-            body:  formData,
+            body: JSON.stringify ({comment}),
         })   
         .then(response  => response.json())
     }
@@ -87,12 +116,26 @@
             event.preventDefault();
 
             let formData = new FormData(form)
+            let comment = formData.get("comment");
             let userId = window.sessionStorage.getItem("userId");
 
-            callApiComments(formData).then((result) => {
+            callApiComments(comment).then((result) => {
                 console.log(result)
             });
         });
+
+        // function to show comments in front end
+    function showComments(comments) {
+
+    let template = document.getElementById("comment-template")
+    let output = document.getElementById("comment")
+
+    
+    let clone = template.content.firstElementChild.cloneNode(true)
+            clone.getElementsByClassName('body_comments')[0].textContent = post.body
+            output.appendChild(clone);
+        
+    }
 
     
         
