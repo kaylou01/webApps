@@ -36,7 +36,18 @@ module.exports={
                 //sendBack(false)
             })
         })
-    }
+    },
+
+    register(username, password, token, sendBack){
+        dataBase.connect().then((db) => {
+            db.run('INSERT INTO users (username, password, token) VALUES (?,?,?)',
+            username,
+            password,
+            token). then(results =>{
+                sendBack(results)
+            })
+        })
+    },
 }
 
 
