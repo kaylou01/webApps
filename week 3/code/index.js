@@ -98,13 +98,13 @@ app.post('/api/post/:id/comment', (req, res)=> {
  
 })
 
-app.get('/api/post/:id/comment', (req,res) =>{
-  console.log(req.body.comment)
-  post.getComment(req.params.id, req.body.comment, result =>{
-    console.log(result);
-    res.status(200).json(result);
+app.get('/api/post/:id/comment', (req, res) => {
+  post.getAllComments(req.params.id, (result) => {
+    console.log(result)
+    res.json(result)
   })
 })
+
 
 // Tell us where we're running from
 console.log("Server running on http://localhost:" + port)

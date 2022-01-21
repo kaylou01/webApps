@@ -70,15 +70,15 @@ module.exports ={
         })
     },
 
-    getComment(postID, comment, sendBack){
-        dataBase.connect().then((db) =>{
-            db.get('SELECT comments.id, comments.body FROM comments', 
+    getAllComments(postID, sendBack){
+        dataBase.connect().then((db)=>{
+            db.all('SELECT comments.id, comments.body FROM comments WHERE comments.post_id = ?',
             postID,
-            comment,
-            ).then(results =>{
+            ). then(results => {
                 sendBack(results)
             })
         })
-    }
+    },
+
 
 }
