@@ -38,13 +38,20 @@ module.exports={
         })
     },
 
-    register(username, password, token, sendBack){
+    register(username, password, sendBack){
         dataBase.connect().then((db) => {
-            db.run('INSERT INTO users (username, password, token) VALUES (?,?,?)',
-            username,
-            password,
-            token). then(results =>{
+            db.get('SELECT * FROM users WHERE username = ?', username). then(results =>{
                 sendBack(results)
+                if(!results){
+                    db.run('INSERT INTO users (username, password) values (?,?)',
+                    username,
+                    password,
+                    ).then(() =>{
+                        sendBack(results)
+                    })
+                } else{
+                    console.log("user already exists try another user")
+                }
             })
         })
     },
