@@ -19,8 +19,9 @@ const port = 3000
 // You can require your own code as well...
 const funcs = require('./src/funcs.js');
 const database = require('./src/database.js');
-const Users = require('./src/users.js');
-const post = require('./src/posts.js')
+//const Users = require('./src/users.js');
+const post = require('./src/posts.js');
+const users = require('./src/users.js');
 database.connect()
 
 // Tell Express to server HTML, JS, CSS etc from the public/ folder
@@ -103,6 +104,15 @@ app.get('/api/post/:id/comment', (req, res) => {
     console.log(result)
     res.json(result)
   })
+})
+
+app.post('/api/register', (req, res) => {
+  console.log(req.params.username)
+  users.register(req.body.username, req.body.password, (result) => {
+    console.log("hello");
+    res.json(result)
+  })
+  console.log(req.body)
 })
 
 

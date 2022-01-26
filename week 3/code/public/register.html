@@ -22,9 +22,34 @@
         
     </form>
     <script>
-        
+        function callApi(u,p) {
+        let url = "/api/register"
+    
+        return fetch(url,{
+            headers: {
+                'Accept': 'application/json',
+                "Content-type" :"application/json",
+            },
+            method: "POST",
+            body: JSON.stringify ({username: u, password: p}),
+        })   
+        .then(response  => response.json())
+    }
+
+    let form = document.querySelector("form");
+    form.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            let user_name = new FormData(form).get("username");
+            let user_password = new FormData(form).get("password")
+
+            callApi(user_name,user_password).then((result) => {
+                console.log(result)
+            });
+        });
+    
+   
     </script>
 
     </body>
     </html>
-
