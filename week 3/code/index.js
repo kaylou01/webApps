@@ -19,7 +19,7 @@ const port = 3000
 // You can require your own code as well...
 const funcs = require('./src/funcs.js');
 const database = require('./src/database.js');
-//const Users = require('./src/users.js');
+const Users = require('./src/users.js');
 const post = require('./src/posts.js');
 const users = require('./src/users.js');
 database.connect()
@@ -40,7 +40,7 @@ app.post('/api/login', function (req, res) {
   console.log(req.body);
   res.status(200);
   //let loggin = false;
-  Users.login(req.body.username, req.body.password, result => {
+  users.login(req.body.username, req.body.password, result => {
     console.log(result)
     if(!result){
       result = false
@@ -48,6 +48,16 @@ app.post('/api/login', function (req, res) {
     res.status(200).json(result);
   })
 })
+
+app.post('/api/register', (req, res) => {
+  console.log(req.params.username)
+  users.register(req.body.username, req.body.password, (result) => {
+    console.log("hello");
+    res.json(result)
+  })
+  console.log(req.body)
+})
+
 
 app.post('/api/posts', upload.single('image'),function (req, res){
 console.log(req.body, req.file);
@@ -81,9 +91,12 @@ app.get('/api/posts', (req, res)=>{
 })
 
 app.get('/api/post/:id', (req, res)=>{
-  post.getSingle(req.params.id, (result) =>{
-    console.log(result)
-    res.json(result)
+  let apiToken = req.get('X-API-Token')
+  Users.findUserToken(apiToken, user =>{
+    post.getSingle(req.params.id, user.id, (result) =>{
+      console.log(result)
+      res.json(result)
+    })
   })
 })
 
@@ -106,13 +119,33 @@ app.get('/api/post/:id/comment', (req, res) => {
   })
 })
 
-app.post('/api/register', (req, res) => {
-  console.log(req.params.username)
-  users.register(req.body.username, req.body.password, (result) => {
-    console.log("hello");
-    res.json(result)
-  })
-  console.log(req.body)
+app.post('api/post/:id/like', (req, res) => {
+  let postId = req.params.postId // Get the post id from the route parameter
+  let apiToken = req.get('X-API-Token') // Get the API token from the headers
+
+  if (apiToken) {
+      users.findByToken(apiToken, user => {
+          DB.connect().then(db => {
+              db.get('SELECT * FROM likes WHERE user_id = ? AND post_id = ?', user.id, postId).then(result => {
+                  if (result) {
+                      // TODO: Implement this function in likes.js and require it as normal
+                      likes.delete(result.id)
+                  }
+                  else {
+                      // TODO: Implement this function in likes.js and require it as normal
+                      likes.create({ user_id: user.id, post_id: postId })
+                  }
+              })
+              .catch(err => {
+                  console.log('users.login failed with error:' + err)
+              })
+          })
+      })
+  }
+  else {
+      // TODO: Return 401 status code
+  }
+  res.json(result);
 })
 
 
