@@ -9,6 +9,13 @@
     img{
        width: 50%; 
     }
+
+    .heart{
+        color: grey;
+    }
+    .liked{
+        color: red;
+    }
 </style>
 <body>
 
@@ -24,6 +31,8 @@
             <div class="body"></div>
         </div>
     </template>
+
+    <button class="heart" id="like" onclick="like()">❤</button>
 
     <!--form for users to add comments-->
     <form>
@@ -51,6 +60,18 @@
 </body>
 
 <script>
+
+    //liked
+    let liked = false; // temp var
+    function like() {
+        liked = !liked;
+        if(liked) {
+            document.getElementById("like").classList.add("liked")
+        } else {
+            document.getElementById("like").classList.remove("liked")
+        }
+    }
+
     // POSTS
 
 // function for get method
@@ -62,6 +83,9 @@
         let url = `/api/post/${postId}`
     
         return fetch(url,{
+            headers: {
+                "X-API-Token": window.sessionStorage.getItem('userToken')
+            },
             method: "GET",
         })   
         .then(response  => response.json())
@@ -88,6 +112,14 @@
                 }
 
             output.appendChild(clone);
+            
+            // todo set liked from post
+        liked = post.liked;
+        if(liked) {
+            document.getElementById("like").classList.add("liked")
+        } else{
+            document.getElementById("like").classList.remove("liked")
+        }
     }
    // COMMENTS
 

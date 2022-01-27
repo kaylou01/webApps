@@ -46,13 +46,18 @@ module.exports ={
         })
     },
 
-    getSingle(postId, sendBack){
-        console.log(postId)
+    getSingle(postId, userId, sendBack) {
         dataBase.connect().then((db)=>{
-            db.get('SELECT * FROM posts JOIN images ON posts.image_id = images.id WHERE posts.id= ?',
-            postId,
-            ). then(results => {
-                sendBack(results)
+            db.get('SELECT * FROM likes WHERE user_id = ? AND post_id = ?', userId, postId).then(like => {
+                db.get('SELECT * FROM posts LEFT JOIN images ON posts.image_id = images.id WHERE posts.id= ?', postId).then(post => {
+                    if (like) {                        
+                        post.liked = true;
+                    }
+                    else {
+                        post.liked = false;
+                    }
+                    sendBack(post)
+                })
             })
         })
     },
@@ -77,6 +82,17 @@ module.exports ={
             ). then(results => {
                 sendBack(results)
             })
+        })
+    },
+
+    likes(userId, postId, sendBack){
+        dataBase.connect().then((db)=> {
+            db.run('INSERT INTO likes (user_id, post_id) VALUES (?,?)',
+            userId,
+            postId) .then(results => {
+                sendBack(results)
+            })
+            
         })
     },
 
