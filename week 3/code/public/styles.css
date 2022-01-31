@@ -1,0 +1,162 @@
+* {
+    padding: 0;
+    margin: 0;
+  }
+
+  body{
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    margin: 0px auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12);
+  }
+
+ 
+/* css styling for header */
+  header{
+    color: black;
+    width: 100%;
+    grid-column: 1 / span 12;
+    grid-row: 1;
+    box-shadow: 1px 2px 4px rgb(0, 0, 0);
+    background-color: rgba(2, 2, 2, 0.2);
+    
+}
+
+.title {
+    font-family: Courier New;
+    color: black;
+    text-shadow: 1px 1px  2px #ff87dc;
+    text-align: center;
+}
+
+.logo {
+    padding: 10px 0px;
+    width: 7%;
+    position: absolute;
+    top: 0;
+    left: 10;
+    display: inline-block;
+  }
+
+  .nav {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.nav .menu-bar {
+    width: 100%;
+    text-align: center;
+    color: black;
+    font-family: Courier New;
+}
+
+
+.menu-bar li{
+    list-style-type: none;
+    display: inline-block;
+    padding: 30px;
+    margin: 0px 20px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+a:hover {
+    background-color: pink;
+}
+/* button styling */
+button, input {
+    border:  2px solid #ff87dc;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+}
+
+
+button:hover, input:hover{
+    background-color: #ff87dc;
+}
+
+/* body styling */
+
+.page_title{
+    grid-column: 1 / span 12;
+    grid-row: 2;
+    margin: 10;
+    text-align: center;
+    color: black;
+    text-shadow: 1px 1px 2px #ff87dc;
+}
+
+.login_box {
+    grid-column: 1 / span 12;
+    grid-row: 3;
+    text-align: center;
+}
+
+/* home page photo layout */
+.artPhoto {
+    width: 100%;
+    grid-column: 2 / span 2;
+    grid-row: 4;
+    box-shadow: 0 6px 10px black;
+}
+
+.artPhoto1 {
+    width: 100%;
+    grid-column: 10 / span 2;
+    grid-row: 4;
+    box-shadow: 0 6px 10px black;
+}
+
+.artPhoto2 {
+    width: 100%;
+    grid-column: 6 / span 2;
+    grid-row: 4;
+    box-shadow: 0 6px 10px black;
+
+}
+
+#deatils {
+    color: black;
+}
+
+label {
+    color: black;
+}
+
+#posts {
+    grid-column: 5 / span 2;
+}
+
+.posts {
+    padding: 25px 25px 25px 25px;
+}
+
+.posts h2 {
+    text-align: center;
+}
+
+.posts img {
+    width: 150%;
+    box-shadow: 0 6px 10px black;
+
+}
+
+.loadBtn {
+    position: absolute;
+    bottom: 0;
+    right: 30%;
+}

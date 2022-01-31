@@ -32,7 +32,7 @@
         </div>
     </template>
 
-    <button class="heart" id="like" onclick="like()">❤</button>
+    <button class="heart" id="like" onclick="addLike()">❤</button>
 
     <!--form for users to add comments-->
     <form>
@@ -61,17 +61,7 @@
 
 <script>
 
-    //liked
-    let liked = false; // temp var
-    function like() {
-        liked = !liked;
-        if(liked) {
-            document.getElementById("like").classList.add("liked")
-        } else {
-            document.getElementById("like").classList.remove("liked")
-        }
-    }
-
+   
     // POSTS
 
 // function for get method
@@ -195,7 +185,45 @@
     }
    
 
-        
+     //liked
+ 
+
+     let liked = false; // temp var
+    function userLikes() {
+        liked = !liked;
+        if(liked) {
+            document.getElementById("like").classList.add("liked")
+        } else {
+            document.getElementById("like").classList.remove("liked")
+        }
+    }
+    
+    function like(like) {
+        const params = new URLSearchParams(window.location.search);
+        const postId = params.get("postId");
+        let url = `/api/post/${postId}/like`
+
+        return fetch(url, {
+            headers: {
+                "X-API-Token": window.sessionStorage.getItem('userToken'),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({like})
+        })   
+        .then(response  => response.json())
+    
+    }
+
+    function addLike() {
+        like().then((result) => {
+            console.log("hello")
+            console.log(result)
+            userLikes(result)
+    });
+    }
+
     
 
     

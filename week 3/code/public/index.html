@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Home page</title>
     <style>
         .hidden {
@@ -12,20 +13,46 @@
 </head>
 
 <body>
-    <h1>Home page</h1>
-    <a id="loginLink" class="hidden" href="/login.html">Login</a>
-    <div>
-        <a href="/register.html">
-            <button>
-                Register
-            </button>
-        </a>
+
+    <header>
+        <div class="title">
+            <h1>Artists Studio</h1>
+        </div>
+       <img class="logo" src="assets/logo.png">
+            <div class="nav">
+                <ul class="menu-bar">
+                    <li>
+                        <a id="home" class="hidden" href="/index.html">Home</a>
+                    </li>
+               <li> 
+                   <a id="createPosts" class="hidden" href="/new_posts.html">Create New Post</a>
+               </li>
+               <li>
+                <a id="viewPosts" class="hidden" href="/postsTimeline.html">See your timeline</a>  
+               </li>
+               <li>
+                <a id="logoutLink" class="hidden" onclick="logout()" href="/index.html">Logout</a>
+               </li>
+                </ul>
+            </div>
+            
+    </header>
+
+    <h1 class="page_title">Welcome Online Artists!</h1>
+    <img class="artPhoto" src="assets/artPhoto1.png">
+    <img class="artPhoto1" src="assets/artPhoto2.png">
+    <img class="artPhoto2" src="assets/artPhoto3.png">
+
+
+    <div class="login_box">
+        <a id="loginLink" class="hidden" href="/login.html"><button>Login</button></a>
+        <a id="register" class="hidden" href="/register.html"><button>Register</button></a>
+        <div id="deatils"></div>
+
+        
+        <!-- <div id="deatils"></div> -->
     </div>
-    <a id="createPosts" class="hidden" href="/new_posts.html">Create New Post</a>
-    <a id="viewPosts" class="hidden" href="/postsTimeline.html">See your timeline</a>
-    <div id="deatils">
-    </div>
-    <a id="logoutLink" class="hidden" onclick="logout()" href="#">Logout</a>
+    
 </body>
 
 <script>
@@ -46,10 +73,14 @@
             document.getElementById('logoutLink').classList.remove('hidden')
             document.getElementById('createPosts').classList.remove('hidden')
             document.getElementById('viewPosts').classList.remove('hidden')
+            document.getElementById('home').classList.remove('hidden')
+
         }
         else {
-            text= "Not logged in yet"
+            text= "Not logged in yet, Please Login or Register to see more"
             document.getElementById('loginLink').classList.remove('hidden')
+            document.getElementById('register').classList.remove('hidden')
+
         }
         loggIn.insertAdjacentHTML("beforeend", `<p>${text}</p>`)
     })

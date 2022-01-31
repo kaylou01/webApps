@@ -3,27 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+
     <title>Log In</title>
 </head>
 <body>
-    <h1>Log in</h1>
-    <a href="/index.html">Home</a>
+    <header>
+        <div class="title">
+            <h1>Artists Studio</h1>
+        </div>
+        <img class="logo" src="assets/logo.png">
+
+        <div class="nav">
+            <ul class="menu-bar">
+                <li>
+                    <a id="home" class="hidden" href="/index.html">Home</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <h1 class="page_title">Log in</h1>
 
     <div id="errorMessage">
 
     </div>
 
-    <form>
-        <!-- TODO: Add username address input -->
-        <label for="username">User Name</label>
-        <input id="username" type="text" name="username" autofocus>
-        <br> <!-- break line-->
-        <!-- TODO: Add password address input -->
-        <label for="password">Password</label>
-        <input id="password" type="text" name="password" autofocus>
-        <!-- TODO: Add submit button -->
-        <input type="submit" value="Submit"/>
-    </form>
+    <div class="login_box">
+        <form>
+            <br>
+            <label for="username">User Name</label>
+            <input id="username" type="text" name="username" autofocus>
+            <br> <!-- break line-->
+            <label for="password">Password</label>
+            <input id="password" type="text" name="password" autofocus>
+            <br>
+            <input type="submit" value="Submit"/>
+        </form>
+    </div>
+  
 
 
 
