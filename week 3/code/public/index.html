@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <script src="navBar.js"></script>
     <title>Home page</title>
     <style>
         .hidden {
@@ -18,8 +19,15 @@
         <div class="title">
             <h1>Artists Studio</h1>
         </div>
+        <div class="dropdown" >
+            <nav>
+                <button class="menu" onclick="myFunction()" >Menu</button>
+            </nav>
+            </div>
        <img class="logo" src="assets/logo.png">
-            <div class="nav">
+
+       
+            <div id="myDropdown" class="nav">
                 <ul class="menu-bar">
                     <li>
                         <a id="home" class="hidden" href="/index.html">Home</a>
@@ -48,14 +56,12 @@
         <a id="loginLink" class="hidden" href="/login.html"><button>Login</button></a>
         <a id="register" class="hidden" href="/register.html"><button>Register</button></a>
         <div id="deatils"></div>
-
-        
-        <!-- <div id="deatils"></div> -->
     </div>
     
 </body>
 
 <script>
+
     function logout() {
         window.sessionStorage.removeItem('userToken')
         window.location = '/login.html';

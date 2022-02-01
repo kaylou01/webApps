@@ -53,7 +53,6 @@ app.post('/api/login', function (req, res) {
 app.post('/api/register', (req, res) => {
   console.log(req.params.username)
   users.register(req.body.username, req.body.password, (result) => {
-    console.log("hello");
     res.json(result)
   })
   console.log(req.body)

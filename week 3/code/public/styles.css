@@ -34,11 +34,12 @@
 
 .logo {
     padding: 10px 0px;
-    width: 7%;
+    width: 70px;
+    height: 70px;
     position: absolute;
     top: 0;
-    left: 10;
-    display: inline-block;
+    right: 0;
+    /* display: inline-block; */
   }
 
   .nav {
@@ -59,8 +60,8 @@
 .menu-bar li{
     list-style-type: none;
     display: inline-block;
-    padding: 30px;
-    margin: 0px 20px;
+    padding: 20px;
+    margin: 0px 10px;
 }
 
 a {
@@ -152,11 +153,82 @@ label {
 .posts img {
     width: 150%;
     box-shadow: 0 6px 10px black;
-
 }
 
 .loadBtn {
     position: absolute;
-    bottom: 0;
+    bottom: -20px;
     right: 30%;
 }
+
+.onePost{
+    /* width: 60%; */
+    grid-column: 4 / span 5;
+    text-align: center;
+    justify-content: center
+}
+
+
+.box {
+    width: 200px;
+    margin: 40px auto;
+    background: gray;
+    padding: 10px;
+    text-align: center;
+    font-weight: 900;
+    color: black;
+    font-family: arial;
+    position: relative;
+  }
+  
+  .sb3:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid gray;
+    border-right: 10px solid transparent;
+    border-top: 10px solid gray;
+    border-bottom: 10px solid transparent;
+    left: 19px;
+    bottom: -19px;
+  }
+  
+  @media screen and (max-width: 830px) {
+    #myDropdown {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 830px) {
+    .title {
+      font-size: 10px;
+    }
+  }
+
+  @media screen and (min-width: 830px) {
+    .menu {
+      display: none;
+    }
+  }
+
+  #myDropdown.show {
+    display: block;
+    background-color: #ff87dc;
+    color: black;
+    padding: 6px;
+    width: 90%;
+    margin-top: 10px;
+    border: none;
+    font-size: 10px;
+    -webkit-box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    -webkit-appearance: button;
+    -moz-appearance: button;
+         appearance: button;
+    outline: none;
+    width: 33.33%;
+    position: absolute;
+  }
+  
+
