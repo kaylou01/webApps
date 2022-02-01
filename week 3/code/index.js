@@ -22,6 +22,7 @@ const database = require('./src/database.js');
 const Users = require('./src/users.js');
 const post = require('./src/posts.js');
 const users = require('./src/users.js');
+const { likes } = require('./src/posts.js');
 database.connect()
 
 // Tell Express to server HTML, JS, CSS etc from the public/ folder
@@ -52,7 +53,6 @@ app.post('/api/login', function (req, res) {
 app.post('/api/register', (req, res) => {
   console.log(req.params.username)
   users.register(req.body.username, req.body.password, (result) => {
-    console.log("hello");
     res.json(result)
   })
   console.log(req.body)
@@ -123,17 +123,19 @@ app.post('api/post/:id/like', (req, res) => {
   let postId = req.params.postId // Get the post id from the route parameter
   let apiToken = req.get('X-API-Token') // Get the API token from the headers
 
+  const dataBase = require('./database.js');
+
   if (apiToken) {
       users.findByToken(apiToken, user => {
-          DB.connect().then(db => {
+          dataBase.connect().then(db => {
               db.get('SELECT * FROM likes WHERE user_id = ? AND post_id = ?', user.id, postId).then(result => {
                   if (result) {
                       // TODO: Implement this function in likes.js and require it as normal
-                      likes.delete(result.id)
+                      likes.delete(result.id);
                   }
                   else {
                       // TODO: Implement this function in likes.js and require it as normal
-                      likes.create({ user_id: user.id, post_id: postId })
+                      likes.create({ user_id: user.id, post_id: postId });
                   }
               })
               .catch(err => {
@@ -142,10 +144,11 @@ app.post('api/post/:id/like', (req, res) => {
           })
       })
   }
-  else {
-      // TODO: Return 401 status code
-  }
-  res.json(result);
+  post.likes(req.params.id, (result) => {
+    console.log(result);
+    res.json(result);
+
+  })
 })
 
 

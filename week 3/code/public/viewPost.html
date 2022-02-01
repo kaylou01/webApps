@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="navBar.js"></script>
+
     <title>view Post</title>
 </head>
 <style>
@@ -18,60 +21,90 @@
     }
 </style>
 <body>
+    <!-- nav bar -->
+    <header>
+        <div class="title">
+            <h1>Artists Studio</h1>
+        </div>
+        <div class="dropdown" >
+            <nav>
+                <button class="menu" onclick="myFunction()" >Menu</button>
+            </nav>
+            </div>
+       <img class="logo" src="assets/logo.png">
 
-    <div id="post">
+       
+            <div id="myDropdown" class="nav">
+                <ul class="menu-bar">
+                    <li>
+                        <a id="home" class="hidden" href="/index.html">Home</a>
+                    </li>
+               <li> 
+                   <a id="createPosts" class="hidden" href="/new_posts.html">Create New Post</a>
+               </li>
+               <li>
+                <a id="viewPosts" class="hidden" href="/postsTimeline.html">See your timeline</a>  
+               </li>
+               <li>
+                <a id="logoutLink" class="hidden" onclick="logout()" href="/index.html">Logout</a>
+               </li>
+                </ul>
+            </div>
+            
+    </header>
+
+   
+    <div class="onePost" id="post">
         <!--1 post will be displayed here-->
     </div>
 
-    <!--template for post-->
-    <template id="post-template">
-        <div class="posts">
-            <h2></h2>
-            <img>
-            <div class="body"></div>
-        </div>
-    </template>
+    <div class="login_box">
+       
 
-    <button class="heart" id="like" onclick="like()">❤</button>
-
-    <!--form for users to add comments-->
-    <form>
-        <label for="users_comment">
-            Add your comments
-        </label>
-        <input id="comment" type="text" name="comment" autofocus>
-        <input type="submit" value="Add Comment"/>
-    </form>
-
-    <div id="comments">
-      <!--comments will be displayed here-->
-      <button onclick='loadMore()'>show comments</button>
-    </div>
-
-    <!--template for comments-->
-    <template id="comment-template">
-        <div class="comment">
-            <div class="body_comments">
-                <!--users comments will be displayed here-->
+        <!--template for post-->
+        <template id="post-template">
+            <div class="posts">
+                <h2></h2>
+                <img>
+                <div class="body"></div>
             </div>
-        </div>
-    </template>
+        </template>
 
+        <button class="heart" id="like" onclick="addLike()">❤</button>
+
+        <!--form for users to add comments-->
+        
+
+        <form>
+            <label for="users_comment">
+                Add your comments
+            </label>
+            <input id="comment" type="text" name="comment" autofocus>
+            <input type="submit" value="Add Comment"/>
+        </form>
+        
+
+        <button onclick='loadMore()'>show comments</button>
+
+        <div id="comments">
+        <!--comments will be displayed here-->
+        </div>
+
+
+        <!--template for comments-->
+        <template id="comment-template">
+            <div class="comment">
+                <div class="body_comments box sb3">
+                    <!--users comments will be displayed here-->
+                </div>
+            </div>
+        </template>
+</div>
 </body>
 
 <script>
 
-    //liked
-    let liked = false; // temp var
-    function like() {
-        liked = !liked;
-        if(liked) {
-            document.getElementById("like").classList.add("liked")
-        } else {
-            document.getElementById("like").classList.remove("liked")
-        }
-    }
-
+   
     // POSTS
 
 // function for get method
@@ -195,7 +228,42 @@
     }
    
 
-        
+     //liked
+ 
+
+     let liked = false; // temp var
+    function userLikes() {
+        liked = !liked;
+        if(liked) {
+            document.getElementById("like").classList.add("liked")
+        } else {
+            document.getElementById("like").classList.remove("liked")
+        }
+    }
+    
+    function like() {
+        const params = new URLSearchParams(window.location.search);
+        const postId = params.get("postId");
+        let url = `/api/post/${postId}`
+
+        return fetch(url, {
+            headers: {
+                "X-API-Token": window.sessionStorage.getItem('userToken'),
+            },
+            method: "POST",
+        })   
+        .then(response  => response.json())
+    
+    }
+
+    function addLike() {
+        like().then((result) => {
+            console.log("hello")
+            console.log(result)
+            userLikes(result)
+    });
+    }
+
     
 
     

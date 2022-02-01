@@ -3,12 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="navBar.js"></script>
+
     <title>Create post</title>
 </head>
 <body>
+    <header>
+        <div class="title">
+            <h1>Artists Studio</h1>
+        </div>
+        <div class="dropdown" >
+            <nav>
+                <button class="menu" onclick="myFunction()" >Menu</button>
+            </nav>
+            </div>
+       <img class="logo" src="assets/logo.png">
 
-    <h1>Create Post</h1>
+       
+            <div id="myDropdown" class="nav">
+                <ul class="menu-bar">
+                    <li>
+                        <a id="home" class="hidden" href="/index.html">Home</a>
+                    </li>
+               <li> 
+                   <a id="createPosts" class="hidden" href="/new_posts.html">Create New Post</a>
+               </li>
+               <li>
+                <a id="viewPosts" class="hidden" href="/postsTimeline.html">See your timeline</a>  
+               </li>
+               <li>
+                <a id="logoutLink" class="hidden" onclick="logout()" href="/index.html">Logout</a>
+               </li>
+                </ul>
+            </div>
+            
+    </header>
+    <h1 class="page_title">Create Post</h1>
 
+    <div class="login_box">
     <form>
         <label for="title_posts">Title of the post</label>
         <br>
@@ -23,8 +56,15 @@
         <br>
         <input type="submit" value="Create Post"/>
     </form>
+    </div>
 
 <script>
+
+    // lets users logout if they want to 
+ function logout() {
+        window.sessionStorage.removeItem('userToken')
+        window.location = '/login.html';
+    }
 
     function callApi(formData) {
         let url = "/api/posts"

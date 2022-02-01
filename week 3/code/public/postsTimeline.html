@@ -3,24 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="navBar.js"></script>
+
     <title>view Post</title>
 </head>
-<style>
-    img{
-       width: 50%; 
-    }
-</style>
 <body>
-    <h1>Posts Time Line</h1>
+    <header>
+        <div class="title">
+            <h1>Artists Studio</h1>
+        </div>
+        <div class="dropdown" >
+            <nav>
+                <button class="menu" onclick="myFunction()" >Menu</button>
+            </nav>
+            </div>
+       <img class="logo" src="assets/logo.png">
 
-<div id ="posts">
-<!--Posts will be displayed here-->
-</div>
+       
+            <div id="myDropdown" class="nav">
+                <ul class="menu-bar">
+                    <li>
+                        <a id="home" class="hidden" href="/index.html">Home</a>
+                    </li>
+               <li> 
+                   <a id="createPosts" class="hidden" href="/new_posts.html">Create New Post</a>
+               </li>
+               <li>
+                <a id="viewPosts" class="hidden" href="/postsTimeline.html">See your timeline</a>  
+               </li>
+               <li>
+                <a id="logoutLink" class="hidden" onclick="logout()" href="/index.html">Logout</a>
+               </li>
+                </ul>
+            </div>
+            
+    </header>
+    <h1 class="page_title">Your Timeline</h1>
+
+    <div>
+        <button class="loadBtn" onclick='loadMore()'>Load Posts</button>
+    </div>
+    
 
 
-<div>
- <button onclick='loadMore()'>Load Posts</button>
-</div>
+    <div class= "showPosts" id ="posts">
+    <!--Posts will be displayed here-->
+    </div>
+
+
+
 
 <template id="post-template">
     <a>
@@ -35,6 +67,11 @@
 </body>
 
 <script>
+
+function logout() {
+        window.sessionStorage.removeItem('userToken')
+        window.location = '/login.html';
+    }
 
     let offset = 0;
     let limit = 5;
