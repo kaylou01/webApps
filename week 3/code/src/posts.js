@@ -75,15 +75,15 @@ module.exports ={
         })
     },
 
-    // getAllComments(postID, sendBack){
-    //     dataBase.connect().then((db)=>{
-    //         db.all('SELECT comments.id, comments.body FROM comments WHERE comments.post_id = ?',
-    //         postID,
-    //         ). then(results => {
-    //             sendBack(results)
-    //         })
-    //     })
-    // },
+    getAllComments(postID, sendBack){
+        dataBase.connect().then((db)=>{
+            db.all('SELECT comments.id, comments.body FROM comments WHERE comments.post_id = ?',
+            postID,
+            ). then(results => {
+                sendBack(results)
+            })
+        })
+    },
 
     // deleteComment (comment_id, sendBack){
     //     dataBase.connect().then((db)=>{

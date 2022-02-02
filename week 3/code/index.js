@@ -136,14 +136,14 @@ app.delete('/api/comment', (req, res) =>{
   })
 })
 
-app.post('api/like', function (req, res){
-  let apiToken = req.get("X-API-Token");
-  users.findUserToken(apiToken, user => {
-  post.likes(req.query.postId, user.id , (result) => {
-    res.status(200).json(result);
-  })
-  })
-})
+// app.post('api/like', function (req, res){
+//   let apiToken = req.get("X-API-Token");
+//   users.findUserToken(apiToken, user => {
+//   post.likes(req.query.postId, user.id , (result) => {
+//     res.status(200).json(result);
+//   })
+//   })
+// })
 
 // app.get('api/likeCounter', function (req, res){
 //   post.likeCount(req.query.postId, (result) => {

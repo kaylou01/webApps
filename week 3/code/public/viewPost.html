@@ -241,19 +241,11 @@
     function userLikes(likesUser) {
         liked = !liked;
         if(liked) {
-            document.getElementById("like").addEventListener("click", (event) => {
-                event.preventDefault();
-                
-            })
             document.getElementById("like").classList.add("liked")
-            liked = true;
         } else {
             document.getElementById("like").classList.remove("liked")
         }
     }
-
-
-    
     
     function like() {
         const params = new URLSearchParams(window.location.search);
