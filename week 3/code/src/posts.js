@@ -75,26 +75,75 @@ module.exports ={
         })
     },
 
-    getAllComments(postID, sendBack){
-        dataBase.connect().then((db)=>{
-            db.all('SELECT comments.id, comments.body FROM comments WHERE comments.post_id = ?',
-            postID,
-            ). then(results => {
-                sendBack(results)
-            })
-        })
-    },
+    // getAllComments(postID, sendBack){
+    //     dataBase.connect().then((db)=>{
+    //         db.all('SELECT comments.id, comments.body FROM comments WHERE comments.post_id = ?',
+    //         postID,
+    //         ). then(results => {
+    //             sendBack(results)
+    //         })
+    //     })
+    // },
 
-    likes(userId, postId, sendBack){
+    // deleteComment (comment_id, sendBack){
+    //     dataBase.connect().then((db)=>{
+    //         db.all('DELETD FROM comments WHERE id =?', comment_id).then(result => {
+    //             sendBack(result);
+    //         })
+    //         .catch(err => {
+    //             console.log("delete comment failed" + err);
+    //         })
+    //     })
+    // },
+
+    // deleteComments (post_id, sendBack){
+    //     dataBase.connect().then((db)=>{
+    //         db.all('DELETD FROM comments WHERE post_id =?', post_id).then(result => {
+    //             sendBack(result);
+    //         })
+    //         .catch(err => {
+    //             console.log("delete comments failed" + err);
+    //         })
+    //     })
+
+    // },
+
+    // userDeleteComment(comment_id, user_id, sendBack){
+    //     dataBase.connect().then((db)=>{
+    //         db.all('SELECT comments.id FROM comments WHERE id=? AND user_id', comment_id, user_id).then(result => {
+    //             return sendBack(result.length > 0);
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         })
+    //     })
+    // }
+
+    likes(postId, userId, sendBack){
         dataBase.connect().then((db)=> {
-            db.run('INSERT INTO likes (user_id, post_id) VALUES (?,?)',
-            userId,
-            postId) .then(results => {
-                sendBack(results)
+            db.all('SELECT post_id FROM likes where post_id = ? AND user_id = ?', postId, userId). then(result =>{
+                if(result.length < 1){
+                    db.run('INSERT INTO likes ("post_id", user_id) VALUES (?,?)', postId, userId).then(result =>{
+                        sendBack(result)
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+                }
             })
             
         })
     },
+
+    
+
+    // likeCount(postId, sendBack){
+    //     dataBase.connect().then((db) => {
+    //         db.all('SELECT COUNT(*) as "likes" FROM likes where post_id = ?', postId).then(result => {
+    //             sendBack(result)
+    //         })
+    //     })
+    // },
 
 
 }

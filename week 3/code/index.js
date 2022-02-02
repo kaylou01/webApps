@@ -119,37 +119,39 @@ app.get('/api/post/:id/comment', (req, res) => {
   })
 })
 
-app.post('api/post/:id/like', (req, res) => {
-  let postId = req.params.postId // Get the post id from the route parameter
-  let apiToken = req.get('X-API-Token') // Get the API token from the headers
-
-  const dataBase = require('./database.js');
-
-  if (apiToken) {
-      users.findByToken(apiToken, user => {
-          dataBase.connect().then(db => {
-              db.get('SELECT * FROM likes WHERE user_id = ? AND post_id = ?', user.id, postId).then(result => {
-                  if (result) {
-                      // TODO: Implement this function in likes.js and require it as normal
-                      likes.delete(result.id);
-                  }
-                  else {
-                      // TODO: Implement this function in likes.js and require it as normal
-                      likes.create({ user_id: user.id, post_id: postId });
-                  }
-              })
-              .catch(err => {
-                  console.log('users.login failed with error:' + err)
-              })
-          })
-      })
-  }
-  post.likes(req.params.id, (result) => {
-    console.log(result);
-    res.json(result);
-
+app.delete('/api/comment', (req, res) =>{
+  let apiToken = req.get("X-API-Token");
+  users.findUserToken(apiToken, user => {
+    let comment_id = req.query.comment_id
+    post.userDeleteComment(comment_id, user.id, (canDelete) => {
+      if(canDelete){
+        post.deleteComment(comment_id, (result)=>{
+          console.log("delete comment", result)
+          res.status(200).json(result);
+        })
+      } else {
+        res.status(403)
+      }
+    })
   })
 })
+
+app.post('api/like', function (req, res){
+  let apiToken = req.get("X-API-Token");
+  users.findUserToken(apiToken, user => {
+  post.likes(req.query.postId, user.id , (result) => {
+    res.status(200).json(result);
+  })
+  })
+})
+
+// app.get('api/likeCounter', function (req, res){
+//   post.likeCount(req.query.postId, (result) => {
+//     res.status(200).json(result);
+//   })
+// })
+
+
 
 
 // Tell us where we're running from

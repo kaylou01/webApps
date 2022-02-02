@@ -1,0 +1,100 @@
+    likes(postId, userId, sendBack){
+        dataBase.connect().then((db)=> {
+            db.all('SELECT post_id FROM likes where post_id = ? AND user_id = ?', postId, userId). then(result =>{
+                if(result.length < 1){
+                    db.run('INSERT INTO likes ("post_id", user_id) VALUES (?,?)', postId, userId).then(result =>{
+                        sendBack(result)
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+                }
+            })
+            
+        })
+    },
+
+    likeCount(postId, sendBack){
+        dataBase.connect().then((db) => {
+            db.all('SELECT COUNT(*) as "likes" FROM likes where post_id = ?', postId).then(result => {
+                sendBack(result)
+            })
+        })
+    },
+
+    // garrys version
+
+    app.post('api/post/:id/like', (req, res) => {
+  let postId = req.params.postId // Get the post id from the route parameter
+  let apiToken = req.get('X-API-Token') // Get the API token from the headers
+
+  const dataBase = require('./database.js');
+
+  if (apiToken) {
+      users.findByToken(apiToken, user => {
+          dataBase.connect().then(db => {
+              db.get('SELECT * FROM likes WHERE user_id = ? AND post_id = ?', user.id, postId).then(result => {
+                  if (result) {
+                      // TODO: Implement this function in likes.js and require it as normal
+                      likes.delete(result.id);
+                  }
+                  else {
+                      // TODO: Implement this function in likes.js and require it as normal
+                      likes.create({ user_id: user.id, post_id: postId });
+                  }
+              })
+              .catch(err => {
+                  console.log('users.login failed with error:' + err)
+              })
+          })
+      })
+  }
+  post.likes(req.params.id, (result) => {
+    console.log(result);
+    res.json(result);
+
+  })
+})
+
+likes
+
+     let liked = false; // temp var
+    function userLikes() {
+        liked = !liked;
+        if(liked) {
+            document.getElementById("like").classList.add("liked")
+        } else {
+            document.getElementById("like").classList.remove("liked")
+        }
+    }
+    
+    function like() {
+        const params = new URLSearchParams(window.location.search);
+        const postId = params.get("postId");
+        let url = `/api/post/${postId}`
+
+        return fetch(url, {
+            headers: {
+                "X-API-Token": window.sessionStorage.getItem('userToken'),
+            },
+            method: "GET",
+        })   
+        .then(response  => response.json())
+    
+    }
+
+    function addLike() {
+        like().then((result) => {
+            console.log("hello")
+            console.log(result)
+            userLikes(result)
+    });
+    }
+
+         // todo set liked from post
+        liked = post.liked;
+        if(liked) {
+            document.getElementById("like").classList.add("liked")
+        } else{
+            document.getElementById("like").classList.remove("liked")
+        }
