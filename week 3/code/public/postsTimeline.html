@@ -59,7 +59,10 @@
     <div class="posts">
         <h2></h2>
         <img>
+        <!-- <a class="heartBtn" id="like" href="#">❤</a> -->
         <div class="body"></div>
+        <!-- <div class="likeCounter"></div> -->
+
     </div>
     </a>
 </template>
@@ -103,6 +106,14 @@ function logout() {
                     clone.getElementsByTagName('img')[0].src = "/uploads/" + post.filepath
                 }
 
+            // clone.getElementsByClassName("heartBtn")[0].addEventListener("click", (event) => {
+            //     event.preventDefault();
+            //     heartPost(post.id)
+            // })
+            
+            // let likeVar = clone.getElementsByClassName("likeCounter")[0]
+            // updateCounter(post.id, likeVar)
+
             output.appendChild(clone);
         })
     }
@@ -119,5 +130,29 @@ function logout() {
             offset += 5
         }
 
+        // function heartPost (postId) {
+//             let options = {
+//                 method: "POST",
+//                 haeders: {
+//                     "X-API-Token": window.sessionStorage.getItem('userToken'),
+//                     'Content-Type': 'application/json'
+//                 }
+//             }
+
+//             fetch("/api/like?postId=" + postId, options).then((result) =>{
+//                 location.reload()
+//             })
+
+//         }
+
+// function updateCounter (postId, elem){
+
+//     fetch("/api/likeCounter?postId=" + postId).then((result) =>{
+//         result.json().then(data =>{
+//             return elem.innerText = "like" + data[0].likes
+//         })
+//     })
+
+// }
 </script>
 </html>

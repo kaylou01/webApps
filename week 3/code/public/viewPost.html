@@ -66,11 +66,15 @@
             <div class="posts">
                 <h2></h2>
                 <img>
+                <!-- <a class="heart" id="like" href="#">❤</a> -->
                 <div class="body"></div>
+                <!-- <div class="likeCounter"></div> -->
             </div>
         </template>
 
-        <button class="heart" id="like" onclick="addLike()">❤</button>
+        <div class="like_section">
+            <button class="heart" id="like" onclick="addLike()">❤</button>
+        </div>
 
         <!--form for users to add comments-->
         
@@ -143,11 +147,13 @@
             if (post.image_id) {
                     clone.getElementsByTagName('img')[0].src = "/uploads/" + post.filepath
                 }
+            
 
             output.appendChild(clone);
+
             
-            // todo set liked from post
-        liked = post.liked;
+            
+            liked = post.liked;
         if(liked) {
             document.getElementById("like").classList.add("liked")
         } else{
@@ -218,6 +224,7 @@
             clone.getElementsByClassName('body_comments')[0].textContent = comment.body
             output.appendChild(clone);
         })
+        
     }
 
     function loadMore(){
@@ -229,17 +236,24 @@
    
 
      //liked
- 
 
      let liked = false; // temp var
-    function userLikes() {
+    function userLikes(likesUser) {
         liked = !liked;
         if(liked) {
+            document.getElementById("like").addEventListener("click", (event) => {
+                event.preventDefault();
+                
+            })
             document.getElementById("like").classList.add("liked")
+            liked = true;
         } else {
             document.getElementById("like").classList.remove("liked")
         }
     }
+
+
+    
     
     function like() {
         const params = new URLSearchParams(window.location.search);
@@ -249,8 +263,9 @@
         return fetch(url, {
             headers: {
                 "X-API-Token": window.sessionStorage.getItem('userToken'),
+                'Content-Type': 'application/json'
             },
-            method: "POST",
+            method: "GET",
         })   
         .then(response  => response.json())
     
@@ -262,7 +277,11 @@
             console.log(result)
             userLikes(result)
     });
+
+ 
     }
+ 
+
 
     
 
